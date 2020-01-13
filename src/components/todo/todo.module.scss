@@ -1,0 +1,24 @@
+.container {
+    cursor: default;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid;
+    border-color: rgba($color: #000000, $alpha: .3);
+    box-shadow: none;
+    padding: 0 .5rem;
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+        border-color: rgba($color: #6BBCC9, $alpha: 1);
+        box-shadow: 1px 1px 10px rgba($color: #000000, $alpha: .4);
+    }
+
+    .description {
+        padding: 0 .5rem;
+        font-size: 14px;
+    }
+}
