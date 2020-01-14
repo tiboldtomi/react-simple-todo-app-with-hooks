@@ -58,7 +58,10 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
         return (
             <div className={styles['container']}>
                 <div className={styles['title-container']}>
-                    <h2 className={styles['title']}>{'Today todos'}</h2>
+                    <h2 className={styles['title']}>
+                        {'Today todos '}
+                        <span className={styles['sub-title']}>{`(${todos.length}/${todos.filter(t => t.completed).length})`}</span>
+                    </h2>
                     <CircularIconButton
                         icon={faTrashAlt}
                         onClick={() => this.setState({ todos: [] }, () => this.updateCookies())}
