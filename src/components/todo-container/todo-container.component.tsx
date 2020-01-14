@@ -26,8 +26,13 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
     }
 
     public componentDidMount() {
-        const { todos } = jsCookies.getJSON('todos');
-        this.setState({ todos });
+        try {
+            const { todos } = jsCookies.getJSON('todos');
+            this.setState({ todos });
+        }
+        catch (e) {
+            console.warn('Todos not found.');
+        }
     }
 
     private updateCookies(): void {
