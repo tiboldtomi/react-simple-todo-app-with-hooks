@@ -23,15 +23,11 @@
     
         &.completed {
             opacity: .35;
+            box-shadow: none;
             border-color: rgba($color: #888, $alpha: .6);
     
             .description {
                 text-decoration: line-through;
-            }
-    
-            &:hover {
-                border-color: rgba($color: #000000, $alpha: .3);
-                box-shadow: none;
             }
         }
     }
