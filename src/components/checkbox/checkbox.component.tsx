@@ -9,8 +9,14 @@ interface ICheckboxProps {
 }
 
 const Checkbox: React.FC<ICheckboxProps> = ({ checked, onChanged }) => (
-    <div className={`${styles['container']}`} onClick={onChanged}>
-        {checked && <FontAwesomeIcon icon={faCheckCircle} color={'#999'} />}
+    <div
+        className={`${styles['container']}`}
+        onClick={e => {
+            e.stopPropagation();
+            onChanged();
+        }}
+    >
+        <FontAwesomeIcon className={`${styles['icon']} ${checked ? styles['checked'] : null}`} icon={faCheckCircle} />
     </div>
 );
 

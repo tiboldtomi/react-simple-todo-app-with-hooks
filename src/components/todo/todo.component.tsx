@@ -19,7 +19,7 @@ const Todo: React.FC<ITodoProps> = ({ todo, setCompleted, setDeleted }) => {
             <div className={styles['delete-icon']} onClick={() => setDeleted(id)}>
                 <FontAwesomeIcon icon={faTimesCircle} color={'#999'} />
             </div>
-            <div className={`${styles['container']} ${completed ? styles['completed'] : null}`}>
+            <div onClick={() => setCompleted(id)} className={`${styles['container']} ${completed ? styles['completed'] : null}`}>
                 <Checkbox checked={completed} onChanged={() => setCompleted(id)} />
                 <FilteredText className={styles['description']}>{desc}</FilteredText>
             </div>
