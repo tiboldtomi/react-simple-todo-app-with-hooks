@@ -1,0 +1,26 @@
+.input-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -1px 10px rgba(0,0,0,.3);
+    padding: .7rem .5rem;
+
+    .input {
+        all: unset;
+        font-size: 14px;
+        height: 2rem;
+        padding: 0 15px;
+        flex-grow: 1;
+        border-radius: 15px;
+        border: 1px solid rgba(0,0,0,.3);
+        margin-right: 15px;
+        box-sizing: border-box;
+        box-shadow: inset 0 0 10px rgba($color: #000000, $alpha: .3);
+
+        &::selection {
+            color: white;
+            background-color: #6BBCC9;
+        }
+    }
+}

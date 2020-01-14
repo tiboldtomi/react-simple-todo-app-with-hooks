@@ -1,0 +1,18 @@
+.btn {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0,0,0,.3);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: none;
+    transition: all 150ms ease-in-out;
+
+    &:active {
+        transform: scale(.9);
+        box-shadow: inset 0 0 5px rgba($color: #000000, $alpha: .4);
+    }
+}

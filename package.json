@@ -14,9 +14,12 @@
     "@types/node": "^12.12.24",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "js-cookie": "^2.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
+    "react-spring": "^8.0.27",
+    "react-transition-group": "^4.3.0",
     "typescript": "^3.7.4",
     "uuidv4": "^6.0.0"
   },
@@ -44,6 +47,8 @@
     ]
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.4",
+    "@types/react-transition-group": "^4.2.3",
     "gh-pages": "^2.2.0",
     "node-sass": "^4.13.0"
   }

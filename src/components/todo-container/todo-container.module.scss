@@ -6,7 +6,7 @@
     height: 500px;
     border-radius: 10px;
     flex-direction: column;
-    color: #333;
+    color: #444;
     overflow: hidden;
 
     .title-container {
@@ -18,57 +18,13 @@
         margin-bottom: 1rem;
 
         .title {
-            font-size: 18px;
+            font-size: 1.4rem;
         }
     }
 
     .todos-container {
         flex: 99;
-        padding: 0 .8rem;
-    }
-
-    .input-container {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 -1px 10px rgba(0,0,0,.3);
-        padding: .7rem .5rem;
-
-        .input {
-            all: unset;
-            height: 2rem;
-            padding: 0 15px;
-            flex-grow: 1;
-            border-radius: 15px;
-            border: 1px solid rgba(0,0,0,.3);
-            margin-right: 15px;
-            box-sizing: border-box;
-            box-shadow: inset 0 0 5px rgba($color: #000000, $alpha: .2);
-
-            &::selection {
-                color: white;
-                background-color: #6BBCC9;
-            }
-        }
-    }
-
-    .circle-btn {
-        all: unset;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid rgba(0,0,0,.3);
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        box-shadow: none;
-        transition: all 150ms ease-in-out;
-
-        &:active {
-            transform: scale(.9);
-            box-shadow: inset 0 0 5px rgba($color: #000000, $alpha: .2);
-        }
+        padding: .6rem .8rem 0;
+        overflow-y: auto;
     }
 }
