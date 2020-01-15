@@ -72,12 +72,12 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
                     />
                 </div>
 
-                {!!todos.length ?
-                    (
-                        <>
-                            <TransitionGroup className={styles['todos-container']}>
+                <div className={styles['todos-container']}>
+                    {!!todos.length ?
+                        (
+                            <TransitionGroup>
                                 {todos.map(todo =>
-                                    <CSSTransition key={todo.id} timeout={300} classNames={'item'}>
+                                    <CSSTransition key={todo.id} timeout={{ enter: 300, exit: 300 }} classNames={'fade'}>
                                         <Todo
                                             key={todo.id}
                                             todo={todo}
@@ -87,12 +87,18 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>
-                        </>
-                    ) : <div className={styles['placeholder-container']}><Placeholder /></div>
-                }
+                        ) : (
+                            <TransitionGroup>
+                                <CSSTransition timeout={{ enter: 300, exit: 300 }} classNames={'fade'}>
+                                    <Placeholder />
+                                </CSSTransition>
+                            </TransitionGroup>
+                        )
+                    }
+                </div>
 
                 <TodoInput onSave={text => this.setState({ todos: [{ id: uuid(), desc: text, completed: false }, ...todos] }, () => this.updateCookies())} />
-            </div>
+            </div >
         );
     }
 }
