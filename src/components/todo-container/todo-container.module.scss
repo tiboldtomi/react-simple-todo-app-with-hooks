@@ -31,4 +31,11 @@
         padding: .6rem .8rem 0;
         overflow-y: auto;
     }
+
+    .placeholder-container {
+        flex: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

@@ -5,6 +5,8 @@ import { Todo } from '../todo';
 import jsCookies from 'js-cookie';
 import { ITodo } from '../../interfaces';
 import { TodoInput } from '../todo-input';
+import { Placeholder } from '../placeholder';
+import { TodoCounter } from '../todo-counter';
 import styles from './todo-container.module.scss';
 import { CircularIconButton } from '../circular-icon-button';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -60,7 +62,9 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
                 <div className={styles['title-container']}>
                     <h2 className={styles['title']}>
                         {'Today todos '}
-                        <span className={styles['sub-title']}>{`(${todos.length}/${todos.filter(t => t.completed).length})`}</span>
+                        <span className={styles['sub-title']}>
+                            <TodoCounter todos={todos} />
+                        </span>
                     </h2>
                     <CircularIconButton
                         icon={faTrashAlt}
@@ -68,18 +72,24 @@ class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerS
                     />
                 </div>
 
-                <TransitionGroup className={styles['todos-container']}>
-                    {todos.map(todo =>
-                        <CSSTransition key={todo.id} timeout={300} classNames={'item'}>
-                            <Todo
-                                key={todo.id}
-                                todo={todo}
-                                setCompleted={id => this.setTodoCompleted(id)}
-                                setDeleted={id => this.setTodoDeleted(id)}
-                            />
-                        </CSSTransition>
-                    )}
-                </TransitionGroup>
+                {!!todos.length ?
+                    (
+                        <>
+                            <TransitionGroup className={styles['todos-container']}>
+                                {todos.map(todo =>
+                                    <CSSTransition key={todo.id} timeout={300} classNames={'item'}>
+                                        <Todo
+                                            key={todo.id}
+                                            todo={todo}
+                                            setCompleted={id => this.setTodoCompleted(id)}
+                                            setDeleted={id => this.setTodoDeleted(id)}
+                                        />
+                                    </CSSTransition>
+                                )}
+                            </TransitionGroup>
+                        </>
+                    ) : <div className={styles['placeholder-container']}><Placeholder /></div>
+                }
 
                 <TodoInput onSave={text => this.setState({ todos: [{ id: uuid(), desc: text, completed: false }, ...todos] }, () => this.updateCookies())} />
             </div>
