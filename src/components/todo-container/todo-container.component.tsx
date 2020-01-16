@@ -3,11 +3,11 @@ import { Todo } from '../todo';
 import jsCookies from 'js-cookie';
 import { ITodo } from '../../interfaces';
 import { TodoInput } from '../todo-input';
+import { useTransition } from 'react-spring';
 import { Placeholder } from '../placeholder';
 import { TodoCounter } from '../todo-counter';
 import styles from './todo-container.module.scss';
 import React, { useState, useEffect } from 'react';
-import { useTransition, animated } from 'react-spring';
 import { CircularIconButton } from '../circular-icon-button';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -104,11 +104,7 @@ const TodoContainer: React.FC<ITodoContainerProps> = () => {
                                 })}
                             </>
                         )
-                        : (
-                            <animated.div style={{ opacity: props.opacity, position: 'absolute', top: '160px', left: '73px' }}>
-                                <Placeholder />
-                            </animated.div>
-                        )
+                        : <Placeholder style={{ ...props }} />
                 )}
             </div>
 
