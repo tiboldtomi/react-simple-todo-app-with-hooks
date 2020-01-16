@@ -43,22 +43,13 @@ body {
 
     .app-title {
         font-family: 'Indie Flower', cursive;
-        font-size: 64px;
+        font-size: 2.5rem;
         font-weight: 700;
         color: #fff;
         text-shadow: 2px 2px rgba(0,0,0,.65);
         margin-bottom: 3rem;
         margin-top: 2rem;
         text-align: center;
-    }
-}
-
-@media (max-width: 800px) {
-    .app-container {
-
-        .app-title {
-            font-size: 48px;
-        }
     }
 }
 

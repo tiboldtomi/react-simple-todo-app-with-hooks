@@ -7,7 +7,7 @@ import { Placeholder } from '../placeholder';
 import { TodoCounter } from '../todo-counter';
 import styles from './todo-container.module.scss';
 import React, { useState, useEffect } from 'react';
-import { animated, useTransition } from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 import { CircularIconButton } from '../circular-icon-button';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +15,7 @@ interface ITodoContainerProps { }
 
 const TodoContainer: React.FC<ITodoContainerProps> = () => {
     const [todos, setTodos] = useState<ITodo[]>([]);
-    const todoHeight: number = 56;
+    const todoHeight: number = 60;
 
     const todoTransitions = useTransition(
         todos.map((t, index) => ({ ...t, y: index * todoHeight })),
@@ -90,10 +90,9 @@ const TodoContainer: React.FC<ITodoContainerProps> = () => {
                 {switchAnimations.map(({ item, props }) =>
                     item
                         ? (
-                            <animated.div style={{ ...props, width: 0, height: 0 }}>
+                            <>
                                 {todoTransitions.map(({ item, props }) => {
                                     const { y, opacity } = props as any;
-
                                     return <Todo
                                         y={y}
                                         todo={item}
@@ -103,10 +102,10 @@ const TodoContainer: React.FC<ITodoContainerProps> = () => {
                                         setCompleted={setTodoCompleted}
                                     />
                                 })}
-                            </animated.div>
+                            </>
                         )
                         : (
-                            <animated.div style={{ ...props, width: 0, height: 0 }}>
+                            <animated.div style={{ opacity: props.opacity, position: 'absolute', top: '160px', left: '73px' }}>
                                 <Placeholder />
                             </animated.div>
                         )
