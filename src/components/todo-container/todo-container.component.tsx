@@ -1,6 +1,4 @@
-import './transition.scss';
 import { uuid } from 'uuidv4';
-import * as React from 'react';
 import { Todo } from '../todo';
 import jsCookies from 'js-cookie';
 import { ITodo } from '../../interfaces';
@@ -8,99 +6,116 @@ import { TodoInput } from '../todo-input';
 import { Placeholder } from '../placeholder';
 import { TodoCounter } from '../todo-counter';
 import styles from './todo-container.module.scss';
+import React, { useState, useEffect } from 'react';
+import { animated, useTransition } from 'react-spring';
 import { CircularIconButton } from '../circular-icon-button';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 interface ITodoContainerProps { }
 
-interface ITodoContainerState {
-    todos: ITodo[];
-}
+const TodoContainer: React.FC<ITodoContainerProps> = () => {
+    const [todos, setTodos] = useState<ITodo[]>([]);
+    const todoHeight: number = 56;
 
-class TodoContainer extends React.Component<ITodoContainerProps, ITodoContainerState> {
-    public constructor(props: ITodoContainerProps) {
-        super(props);
+    const todoTransitions = useTransition(
+        todos.map((t, index) => ({ ...t, y: index * todoHeight })),
+        todo => todo.id,
+        {
+            from: { opacity: 0 },
+            leave: { opacity: 0 },
+            enter: ({ y }) => ({ y, opacity: 1 }),
+            update: ({ y }) => ({ y, opacity: 1 }),
+        }
+    );
 
-        this.state = {
-            todos: []
-        };
-    }
+    const switchAnimations = useTransition(todos.length > 0, null, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+    });
 
-    public componentDidMount() {
+    useEffect(() => {
         try {
             const { todos } = jsCookies.getJSON('todos');
-            this.setState({ todos });
+            setTodos(todos);
         }
         catch (e) {
             console.warn('Todos not found.');
         }
-    }
+    }, []);
 
-    private updateCookies(): void {
-        const { todos } = this.state;
+    // eslint-disable-next-line
+    useEffect(() => updateCookies(), [todos]);
+
+    const updateCookies = () => {
         jsCookies.set('todos', { todos }, { expires: 1 });
     }
 
-    private setTodoCompleted(id: string): void {
-        this.setState(({ todos }) => ({
-            todos: todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t)
-        }), () => this.updateCookies());
+    const setTodoCompleted = (id: string) => {
+        let selectedTodo: ITodo = { ...todos[todos.findIndex(todo => todo.id === id)] };
+        selectedTodo = {
+            ...selectedTodo,
+            completed: !selectedTodo.completed
+        }
+        let updatedTodos: ITodo[];
+        if (selectedTodo.completed) {
+            updatedTodos = [...todos.filter(todo => todo.id !== id), selectedTodo];
+        }
+        else {
+            updatedTodos = [selectedTodo, ...todos.filter(todo => todo.id !== id)];
+        }
+        setTodos(updatedTodos);
     }
 
-    private setTodoDeleted(id: string): void {
-        this.setState(({ todos }) => ({
-            todos: todos.filter(t => t.id !== id)
-        }), () => this.updateCookies());
+    const setTodoDeleted = (id: string) => {
+        setTodos(todos.filter(t => t.id !== id));
     }
 
-    public render(): React.ReactElement<ITodoContainerProps> {
-        const { todos } = this.state;
+    return (
+        <div className={styles['container']}>
+            <div className={styles['title-container']}>
+                <h2 className={styles['title']}>
+                    {'Today todos '}
+                    <span className={styles['sub-title']}>
+                        <TodoCounter todos={todos} />
+                    </span>
+                </h2>
+                <CircularIconButton
+                    icon={faTrashAlt}
+                    onClick={() => setTodos([])}
+                />
+            </div>
 
-        return (
-            <div className={styles['container']}>
-                <div className={styles['title-container']}>
-                    <h2 className={styles['title']}>
-                        {'Today todos '}
-                        <span className={styles['sub-title']}>
-                            <TodoCounter todos={todos} />
-                        </span>
-                    </h2>
-                    <CircularIconButton
-                        icon={faTrashAlt}
-                        onClick={() => this.setState({ todos: [] }, () => this.updateCookies())}
-                    />
-                </div>
+            <div className={styles['todos-container']}>
+                {switchAnimations.map(({ item, props }) =>
+                    item
+                        ? (
+                            <animated.div style={{ ...props, width: 0, height: 0 }}>
+                                {todoTransitions.map(({ item, props }) => {
+                                    const { y, opacity } = props as any;
 
-                <div className={styles['todos-container']}>
-                    {!!todos.length ?
-                        (
-                            <TransitionGroup>
-                                {todos.map(todo =>
-                                    <CSSTransition key={todo.id} timeout={{ enter: 300, exit: 300 }} classNames={'fade'}>
-                                        <Todo
-                                            key={todo.id}
-                                            todo={todo}
-                                            setCompleted={id => this.setTodoCompleted(id)}
-                                            setDeleted={id => this.setTodoDeleted(id)}
-                                        />
-                                    </CSSTransition>
-                                )}
-                            </TransitionGroup>
-                        ) : (
-                            <TransitionGroup>
-                                <CSSTransition timeout={{ enter: 300, exit: 300 }} classNames={'fade'}>
-                                    <Placeholder />
-                                </CSSTransition>
-                            </TransitionGroup>
+                                    return <Todo
+                                        y={y}
+                                        todo={item}
+                                        key={item.id}
+                                        opacity={opacity}
+                                        setDeleted={setTodoDeleted}
+                                        setCompleted={setTodoCompleted}
+                                    />
+                                })}
+                            </animated.div>
                         )
-                    }
-                </div>
+                        : (
+                            <animated.div style={{ ...props, width: 0, height: 0 }}>
+                                <Placeholder />
+                            </animated.div>
+                        )
+                )}
+            </div>
 
-                <TodoInput onSave={text => this.setState({ todos: [{ id: uuid(), desc: text, completed: false }, ...todos] }, () => this.updateCookies())} />
-            </div >
-        );
-    }
+            <TodoInput onSave={desc => setTodos([{ id: uuid(), desc, completed: false }, ...todos])} />
+        </div>
+    );
 }
 
 export default TodoContainer;
