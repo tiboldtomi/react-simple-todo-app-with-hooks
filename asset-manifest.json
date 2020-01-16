@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/react-simple-todo-app-with-hooks/static/css/main.95a6ed0a.chunk.css",
-    "main.js": "/react-simple-todo-app-with-hooks/static/js/main.fdfe09c4.chunk.js",
-    "main.js.map": "/react-simple-todo-app-with-hooks/static/js/main.fdfe09c4.chunk.js.map",
+    "main.css": "/react-simple-todo-app-with-hooks/static/css/main.cf10e6ab.chunk.css",
+    "main.js": "/react-simple-todo-app-with-hooks/static/js/main.94d6bb8b.chunk.js",
+    "main.js.map": "/react-simple-todo-app-with-hooks/static/js/main.94d6bb8b.chunk.js.map",
     "runtime-main.js": "/react-simple-todo-app-with-hooks/static/js/runtime-main.1a0e4609.js",
     "runtime-main.js.map": "/react-simple-todo-app-with-hooks/static/js/runtime-main.1a0e4609.js.map",
-    "static/js/2.cf34d1ce.chunk.js": "/react-simple-todo-app-with-hooks/static/js/2.cf34d1ce.chunk.js",
-    "static/js/2.cf34d1ce.chunk.js.map": "/react-simple-todo-app-with-hooks/static/js/2.cf34d1ce.chunk.js.map",
+    "static/js/2.93f70a47.chunk.js": "/react-simple-todo-app-with-hooks/static/js/2.93f70a47.chunk.js",
+    "static/js/2.93f70a47.chunk.js.map": "/react-simple-todo-app-with-hooks/static/js/2.93f70a47.chunk.js.map",
     "index.html": "/react-simple-todo-app-with-hooks/index.html",
-    "precache-manifest.c047962f15abca432b69891254fd3fbb.js": "/react-simple-todo-app-with-hooks/precache-manifest.c047962f15abca432b69891254fd3fbb.js",
+    "precache-manifest.e7aaaffb36a4993eff8adb30dd7a9100.js": "/react-simple-todo-app-with-hooks/precache-manifest.e7aaaffb36a4993eff8adb30dd7a9100.js",
     "service-worker.js": "/react-simple-todo-app-with-hooks/service-worker.js",
-    "static/css/main.95a6ed0a.chunk.css.map": "/react-simple-todo-app-with-hooks/static/css/main.95a6ed0a.chunk.css.map",
-    "static/js/2.cf34d1ce.chunk.js.LICENSE": "/react-simple-todo-app-with-hooks/static/js/2.cf34d1ce.chunk.js.LICENSE"
+    "static/css/main.cf10e6ab.chunk.css.map": "/react-simple-todo-app-with-hooks/static/css/main.cf10e6ab.chunk.css.map",
+    "static/js/2.93f70a47.chunk.js.LICENSE": "/react-simple-todo-app-with-hooks/static/js/2.93f70a47.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.1a0e4609.js",
-    "static/js/2.cf34d1ce.chunk.js",
-    "static/css/main.95a6ed0a.chunk.css",
-    "static/js/main.fdfe09c4.chunk.js"
+    "static/js/2.93f70a47.chunk.js",
+    "static/css/main.cf10e6ab.chunk.css",
+    "static/js/main.94d6bb8b.chunk.js"
   ]
 }
