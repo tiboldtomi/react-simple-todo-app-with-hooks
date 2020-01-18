@@ -3,8 +3,8 @@
     background: #fff;
     box-shadow: 5px 5px 10px rgba(0,0,0,.3), -5px -5px 10px rgba(0,0,0,.3);
     display: flex;
-    width: 350px;
-    height: 500px;
+    width: 450px;
+    height: 650px;
     border-radius: 10px;
     flex-direction: column;
     color: #444;
@@ -33,5 +33,16 @@
         padding: .5rem .8rem 0;
         overflow-y: scroll;
         overflow-x: hidden;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
     }
 }

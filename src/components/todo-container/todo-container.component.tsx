@@ -3,6 +3,7 @@ import { Todo } from '../todo';
 import jsCookies from 'js-cookie';
 import { ITodo } from '../../interfaces';
 import { TodoInput } from '../todo-input';
+import useMeasure from 'react-use-measure';
 import { useTransition } from 'react-spring';
 import { Placeholder } from '../placeholder';
 import { TodoCounter } from '../todo-counter';
@@ -15,10 +16,10 @@ interface ITodoContainerProps { }
 
 const TodoContainer: React.FC<ITodoContainerProps> = () => {
     const [todos, setTodos] = useState<ITodo[]>([]);
-    const todoHeight: number = 60;
+    const [todoRef, { height: todoHeight, width: todoWidth }] = useMeasure();
 
     const todoTransitions = useTransition(
-        todos.map((t, index) => ({ ...t, y: index * todoHeight })),
+        todos.map((t, index) => ({ ...t, y: index * todoHeight * 1.3 })),
         todo => todo.id,
         {
             from: { opacity: 0 },
@@ -90,21 +91,23 @@ const TodoContainer: React.FC<ITodoContainerProps> = () => {
                 {switchAnimations.map(({ item, props }) =>
                     item
                         ? (
-                            <>
+                            <React.Fragment key={'_todos-fragment'}>
                                 {todoTransitions.map(({ item, props }) => {
                                     const { y, opacity } = props as any;
                                     return <Todo
                                         y={y}
                                         todo={item}
+                                        ref={todoRef}
                                         key={item.id}
+                                        width={todoWidth}
                                         opacity={opacity}
                                         setDeleted={setTodoDeleted}
                                         setCompleted={setTodoCompleted}
                                     />
                                 })}
-                            </>
+                            </React.Fragment>
                         )
-                        : <Placeholder style={{ ...props }} />
+                        : <Placeholder key={'_placeholder'} style={{ ...props }} />
                 )}
             </div>
 

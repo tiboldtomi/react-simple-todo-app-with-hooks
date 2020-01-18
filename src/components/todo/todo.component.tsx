@@ -8,13 +8,14 @@ import { useSpring, animated, OpaqueInterpolation, interpolate, config } from 'r
 
 interface ITodoProps {
     todo: ITodo;
+    width: number;
     y: OpaqueInterpolation<number>;
     setDeleted: (id: string) => void;
     setCompleted: (id: string) => void;
     opacity: OpaqueInterpolation<number>;
 }
 
-const Todo: React.FC<ITodoProps> = ({ todo, setCompleted, setDeleted, y, opacity: wrapperOpacity }) => {
+const Todo: React.FC<ITodoProps> = ({ todo, setCompleted, setDeleted, y, opacity: wrapperOpacity, width }, ref) => {
     const { desc, completed, id } = todo;
     const [bind, { delta, down }] = useGesture();
     const { opacity, borderColor, textDecoration, boxShadow } = useSpring({
@@ -24,22 +25,31 @@ const Todo: React.FC<ITodoProps> = ({ todo, setCompleted, setDeleted, y, opacity
         textDecoration: completed ? 'line-through' : 'none',
     });
 
+    const swipeLimitToDelete: number = width * 0.7;
+    const deletedXPosition: number = width * 1.6;
+
     const { x } = useSpring({
-        x: down ? delta[0] : (delta[0] < -200 ? -350 : (delta[0] > 200) ? 350 : 0),
+        x: down ? delta[0] : (delta[0] < -swipeLimitToDelete ? -deletedXPosition : (delta[0] > swipeLimitToDelete ? deletedXPosition : 0)),
         onFrame: ({ x }: any) => {
-            if ((x < -300 || x > 300) && !down) {
+            if ((x < -swipeLimitToDelete || x > swipeLimitToDelete) && !down) {
                 setDeleted(id);
             }
         },
-        config: config.wobbly
+        config: config.stiff
     });
 
     return (
         <animated.div
-            className={styles['wrapper']}
+            ref={ref}
             {...bind()}
+            className={styles['wrapper']}
             style={{
-                opacity: !down ? wrapperOpacity : x.interpolate({ range: [-350, -160, -100, 0, 100, 160, 350], output: [0.3, 0.6, 1, 1, 1, 0.6, 0.3] }),
+                opacity: delta[0] === 0
+                    ? wrapperOpacity
+                    : x.interpolate({
+                        range: [-deletedXPosition, -(deletedXPosition * 0.6), -(deletedXPosition * 0.3), 0, (deletedXPosition * 0.3), (deletedXPosition * 0.6), deletedXPosition],
+                        output: [0, 0.25, 0.35, 1, 0.35, 0.25, 0]
+                    }),
                 transform: interpolate([x, y], (x, y) => `translate3d(${x}px,${y}px,0)`),
             }}
         >
@@ -52,6 +62,6 @@ const Todo: React.FC<ITodoProps> = ({ todo, setCompleted, setDeleted, y, opacity
             </animated.div>
         </animated.div>
     );
-}
+};
 
-export default Todo;
+export default React.forwardRef(Todo);
