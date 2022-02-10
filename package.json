@@ -52,6 +52,6 @@
     "@types/js-cookie": "^2.2.4",
     "@types/react-transition-group": "^4.2.3",
     "gh-pages": "^2.2.0",
-    "node-sass": "^4.13.0"
+    "node-sass": "^7.0.0"
   }
 }
